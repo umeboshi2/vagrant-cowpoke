@@ -6,14 +6,12 @@ renderer: yaml_jinja
 
 file_client: local
 fileserver_backend:
-  - git
   - roots
-
-gitfs_remotes:
-  - https://github.com/umeboshi2/saltstack-formulae.git
-  - https://github.com/umeboshi2/paella-states.git
+  
 file_roots:
   base:
+    - /vagrant/repos/formulae
+    - /vagrant/repos/paella-states
     - /vagrant/salt/states
 
 pillar_roots:
