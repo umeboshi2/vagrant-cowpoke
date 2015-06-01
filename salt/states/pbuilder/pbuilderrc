@@ -8,8 +8,14 @@ BASETGZ=/var/cache/pbuilder/base.tgz
 BUILDPLACE=/var/cache/pbuilder/build/
 MIRRORSITE=http://cdn.debian.net/debian
 #OTHERMIRROR="deb http://www.home.com/updates/ ./"
+{% set othermirrors = pget('pbuilder:config:othermirrors', []) %}
+{% if othermirrors %}
+OTHERMIRROR="{{ '|'.join(othermirrors) }}"
+{% endif %}
 #export http_proxy=http://your-proxy:8080/
-export http_proxy=http://10.0.3.2:3142/
+{% if pget('pbuilder:config:http_proxy', False) -%}
+export http_proxy=http://10.0.4.1:3142/
+{%- endif %}
 USEPROC=yes
 USEDEVPTS=yes
 USENETWORK=no
@@ -19,7 +25,7 @@ BUILDRESULT=/var/cache/pbuilder/result/
 
 # specifying the distribution forces the distribution on "pbuilder update"
 #DISTRIBUTION=sid
-DISTRIBUTION={{ pget('pbuilder:distribution', 'jessie') }}
+DISTRIBUTION={{ pget('pbuilder:config:distribution', 'sid') }}
 # specifying the architecture passes --arch= to debootstrap; the default is
 # to use the architecture of the host
 #ARCHITECTURE=`dpkg --print-architecture`

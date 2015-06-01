@@ -1,0 +1,35 @@
+# -*- mode: yaml -*-
+{% load_yaml as defaults %}
+http_proxy: http://10.0.4.1:3142/
+
+# The user and group are set to vagrant for the vagrant machine.
+# If you are using vagrant, don't change these.
+paella_user: vagrant
+paella_group: vagrant
+
+# The default hostname for the paella server is paella
+# The paella-client package uses this a default in the
+# configuration file.  This should not need to be changed
+# on the vagrant system.
+paella_hostname: paella
+
+# The values below represent the network that paella will
+# be controlling.  If the default 10.0.4 network conflicts
+# with your local network, adjust the following values to
+# better fit your network.
+paella_server_ip: 10.0.4.1
+paella_subnet_network: 10.0.4.0
+paella_subnet_netmask: 255.255.255.0
+paella_subnet_range_low: 10.0.4.20
+paella_subnet_range_high: 10.0.4.126
+paella_subnet_in_addr: 4.0.10
+# The domain name is not used
+paella_subnet_domain: paellanet
+
+# If you already have a local apt cache proxy
+# on your network, you can set these values
+# to use it, instead of the installed squid proxy
+use_local_apt_cache_proxy: false
+local_apt_cache_proxy: http://apt-cache:3142
+
+{% endload %}

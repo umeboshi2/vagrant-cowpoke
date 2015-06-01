@@ -14,6 +14,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # https://github.com/umeboshi2/vagrant-debian-jessie-64
   config.vm.box = "debian-jessie"
 
+  config.vm.hostname = "buildbase"
+  
   # Disable automatic box update checking. If you disable this, then
   # boxes will only be checked for updates when the user runs
   # `vagrant box outdated`. This is not recommended.
