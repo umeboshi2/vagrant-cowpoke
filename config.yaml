@@ -1,0 +1,20 @@
+# -*- mode: yaml -*-
+
+
+main:
+  tap_interface: maintap
+  tap_interface_ip_address: 10.0.4.1
+  basebox: debian-jessie
+  basebox_repo_url: https://github.com/umeboshi2/vagrant-debian-jessie-64.git
+  base_builder: buildbase
+  num_cpus: 2
+  memory: 512
+  
+
+fooapt:
+  configs:
+    02proxy:
+      content: |
+        Acquire::http { Proxy "{{ defaults.http_proxy }}"; };
+
+        

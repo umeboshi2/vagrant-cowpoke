@@ -12,9 +12,9 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # Every Vagrant virtual environment requires a box to build off of.
   # This box is built from:
   # https://github.com/umeboshi2/vagrant-debian-jessie-64
-  config.vm.box = "debian-jessie"
+  config.vm.box = "${config['main']['basebox']}"
 
-  config.vm.hostname = "buildbase"
+  config.vm.hostname = "${config['main']['base_builder']}"
   
   # Disable automatic box update checking. If you disable this, then
   # boxes will only be checked for updates when the user runs
@@ -73,7 +73,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.
     provision :shell,
               inline:
-                "echo 'Acquire::http { Proxy \"http://10.0.4.1:3142\"; };' > /etc/apt/apt.conf.d/02proxy"
+                "echo 'Acquire::http { Proxy \"http://${config['main']['tap_interface_ip_address']}:3142\"; };' > /etc/apt/apt.conf.d/02proxy"
   config.vm.provision :shell, inline: "sudo apt-get -y install python-git"
   config.vm.provision :shell, path: "salt/prepare-salt-roots.sh"
   config.vm.provision :shell, path: "vagrant-bootstrap.sh"
