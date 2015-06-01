@@ -14,6 +14,11 @@ Use debian/jessie amd64 desktop. Install and configure:
 - apt-cacher-ng
 - uml-utilities
 
+for local repository of built packages:
+
+- reprepro
+- apache2
+
 
 for building basebox:
 
@@ -27,6 +32,11 @@ for these scripts:
 - python-yaml
 - python-mako
 
+
+build-tools:
+
+- devscripts
+- dput
 
 
 Install uml-utilities and add user to uml-net group.

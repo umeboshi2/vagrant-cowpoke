@@ -62,4 +62,5 @@ target/
 /.vagrant
 /repos
 /basebox
+/config.yaml.local
 

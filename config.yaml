@@ -10,11 +10,3 @@ main:
   num_cpus: 2
   memory: 512
   
-
-fooapt:
-  configs:
-    02proxy:
-      content: |
-        Acquire::http { Proxy "{{ defaults.http_proxy }}"; };
-
-        

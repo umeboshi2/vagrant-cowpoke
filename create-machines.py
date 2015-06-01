@@ -5,7 +5,10 @@ import yaml
 from mako.template import Template
 
 config = yaml.load(file('config.yaml'))
-
+if os.path.isfile('config.yaml.local'):
+    lconfig = yaml.load(file('config.yaml.local'))
+    config.update(lconfig)
+    
 basebox_repo_url = 'https://github.com/umeboshi2/vagrant-debian-jessie-64.git'
 
 def list_vagrant_boxes():
@@ -37,6 +40,12 @@ def build_basebox():
     subprocess.check_call(cmd)
 
 def create_base_builder():
+    # make local config for pillar
+    filename = 'salt/pillar/local-config.sls'
+    cdump = yaml.dump(config, default_flow_style=False)
+    with file(filename, 'w') as outfile:
+        outfile.write('# -*- mode: yaml -*-\n')
+        outfile.write(cdump)
     if os.path.isfile('package.box'):
         print "removing package.box"
         os.remove('package.box')
@@ -75,9 +84,11 @@ if __name__ == '__main__':
     buildbase = 'buildbase'
     if basebox not in list_vagrant_boxes():
         build_basebox()
+    else:
+        print "base box %s present." % basebox
     if buildbase not in list_vagrant_boxes():
         create_base_builder()
-        
-    template = Template(filename='vfile-buildbase.mako')
+    else:
+        print "base build box %s present." % buildbase
 
     
