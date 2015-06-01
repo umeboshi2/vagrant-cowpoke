@@ -63,4 +63,5 @@ target/
 /repos
 /basebox
 /config.yaml.local
+/salt/pillar/local-config.sls
 
