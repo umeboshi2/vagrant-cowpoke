@@ -1,35 +1,12 @@
 # -*- mode: yaml -*-
-{% from 'config.jinja' import defaults %}
 
-#apt:
-#  configs:
-#    02proxy:
-#      content: |
-#        Acquire::http { Proxy "http://10.0.3.2:3142"; };
-#
-
-apt:
-  configs:
-    02proxy:
-      content: |
-        Acquire::http { Proxy "{{ defaults.http_proxy }}"; };
-
-        
 sshd_config:
   PermitRootLogin: 'yes'
   PermitEmptyPasswords: 'yes'
 
-pbuilder:
-  config:
-    http_proxy: {{ defaults.http_proxy }}
-    distribution: jessie
-    #othermirrors: []
-      
-
-
+  
   
 debootstrap:
-  http_proxy: {{ defaults.http_proxy }}
   basedir: /srv/chroots
   no_chroots:
     jessie:

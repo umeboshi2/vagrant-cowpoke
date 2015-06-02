@@ -11,6 +11,14 @@ if os.path.isfile('config.yaml.local'):
     
 basebox_repo_url = 'https://github.com/umeboshi2/vagrant-debian-jessie-64.git'
 
+def generate_local_config():
+    # make local config for pillar
+    filename = 'salt/pillar/local-config.sls'
+    cdump = yaml.dump(config, default_flow_style=False)
+    with file(filename, 'w') as outfile:
+        outfile.write('# -*- mode: yaml -*-\n')
+        outfile.write(cdump)
+    
 def list_vagrant_boxes():
     cmd = ['vagrant', 'box', 'list']
     proc = subprocess.Popen(cmd, stdout=subprocess.PIPE)
@@ -40,12 +48,6 @@ def build_basebox():
     subprocess.check_call(cmd)
 
 def create_base_builder():
-    # make local config for pillar
-    filename = 'salt/pillar/local-config.sls'
-    cdump = yaml.dump(config, default_flow_style=False)
-    with file(filename, 'w') as outfile:
-        outfile.write('# -*- mode: yaml -*-\n')
-        outfile.write(cdump)
     if os.path.isfile('package.box'):
         print "removing package.box"
         os.remove('package.box')
@@ -82,6 +84,7 @@ def create_base_builder():
 if __name__ == '__main__':
     basebox = 'debian-jessie'
     buildbase = 'buildbase'
+    generate_local_config()
     if basebox not in list_vagrant_boxes():
         build_basebox()
     else:

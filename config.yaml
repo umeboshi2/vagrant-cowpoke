@@ -1,12 +1,33 @@
 # -*- mode: yaml -*-
 
+tap_interface: maintap
+tap_interface_ip_address: &ip_address 10.0.4.1
+http_proxy: &apt_proxy http://10.0.4.1:3142/ 
 
-main:
-  tap_interface: maintap
-  tap_interface_ip_address: 10.0.4.1
-  basebox: debian-jessie
-  basebox_repo_url: https://github.com/umeboshi2/vagrant-debian-jessie-64.git
-  base_builder: buildbase
+apt:
+  configs:
+    02proxy:
+      content: |
+        Acquire::http { Proxy "http://10.0.4.1:3142/"; };
+
+basebox_name: debian-jessie
+basebox_repo_url: https://github.com/umeboshi2/vagrant-debian-jessie-64.git
+basebuilder_name: buildbase
+
+vm:
   num_cpus: 2
   memory: 512
   
+
+pbuilder:
+  config:
+    http_proxy: *apt_proxy
+    distribution: jessie
+
+  
+debootstrap:
+  http_proxy: *apt_proxy
+
+  
+  
+    
